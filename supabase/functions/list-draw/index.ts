@@ -1,0 +1,5 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const site='https://danitomasetto.github.io';
+const cors={'Access-Control-Allow-Origin':site,'Access-Control-Allow-Headers':'authorization, content-type'};
+function secureFraction(){const bytes=new Uint32Array(1);crypto.getRandomValues(bytes);return bytes[0]/4294967296}
+Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{headers:cors});try{if(req.method!=='POST')throw new Error('METHOD');const token=req.headers.get('Authorization');if(!token)throw new Error('AUTH');const body=await req.json();const supabase=createClient(Deno.env.get('SUPABASE_URL')!,Deno.env.get('SUPABASE_ANON_KEY')!,{global:{headers:{Authorization:token}}});const {data:{user},error:userError}=await supabase.auth.getUser();if(userError||!user)throw new Error('AUTH');const {data,error}=await supabase.rpc('roleta_draw_list_event',{p_event_id:body.eventId,p_random_value:secureFraction()});if(error)throw error;return Response.json(data?.[0],{headers})}catch(_){return Response.json({error:'Não foi possível realizar o sorteio.'},{status:400,headers})}});
