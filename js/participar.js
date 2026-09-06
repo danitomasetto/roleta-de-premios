@@ -1,0 +1,3 @@
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config.js';
+const form=document.querySelector('#participantForm'), message=document.querySelector('#formMessage');
+form.addEventListener('submit',async event=>{event.preventDefault();const eventSlug=new URLSearchParams(location.search).get('evento');if(!eventSlug){message.textContent='Este link de evento não é válido.';return}if(!SUPABASE_URL||!SUPABASE_PUBLISHABLE_KEY){message.textContent='A roleta ainda está sendo configurada.';return}message.textContent='Preparando seu giro…';/* A chamada será feita para a Edge Function spin; nenhum prêmio é decidido aqui. */});
