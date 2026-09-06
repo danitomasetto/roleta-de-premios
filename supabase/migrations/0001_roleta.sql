@@ -18,8 +18,8 @@ create table if not exists roleta.prizes (
 );
 create table if not exists roleta.participants (
   id uuid primary key default gen_random_uuid(), event_id uuid not null references roleta.events(id) on delete cascade,
-  full_name text not null, whatsapp text not null, instagram text, email text, privacy_accepted_at timestamptz not null,
-  created_at timestamptz not null default now()
+  full_name text not null, whatsapp text not null, whatsapp_normalized text not null, instagram text, email text, privacy_accepted_at timestamptz not null,
+  created_at timestamptz not null default now(), unique(event_id, whatsapp_normalized)
 );
 create table if not exists roleta.spins (
   id uuid primary key default gen_random_uuid(), event_id uuid not null references roleta.events(id), participant_id uuid not null references roleta.participants(id),
@@ -30,7 +30,7 @@ create table if not exists roleta.coupons (
   code text not null unique, status text not null default 'generated' check(status in ('generated','redeemed','cancelled')),
   redeemed_at timestamptz, redeemed_by uuid references auth.users(id), created_at timestamptz not null default now()
 );
-create index if not exists participants_event_whatsapp_idx on roleta.participants(event_id, whatsapp);
+create index if not exists participants_event_whatsapp_idx on roleta.participants(event_id, whatsapp_normalized);
 create index if not exists spins_event_created_idx on roleta.spins(event_id, created_at desc);
 alter table roleta.events enable row level security; alter table roleta.prizes enable row level security; alter table roleta.participants enable row level security; alter table roleta.spins enable row level security; alter table roleta.coupons enable row level security;
 revoke all on all tables in schema roleta from public, anon, authenticated;
@@ -45,7 +45,8 @@ begin
   select * into v_event from roleta.events where slug=p_slug and status='active' and (starts_at is null or starts_at<=now()) and (ends_at is null or ends_at>=now()) for update;
   if not found then raise exception 'EVENT_NOT_AVAILABLE'; end if;
   if coalesce(trim(p_name),'')='' or coalesce(trim(p_whatsapp),'')='' then raise exception 'PARTICIPANT_REQUIRED'; end if;
-  insert into roleta.participants(event_id,full_name,whatsapp,instagram,email,privacy_accepted_at) values(v_event.id,trim(p_name),trim(p_whatsapp),nullif(trim(p_instagram),''),nullif(trim(p_email),''),now()) returning id into v_participant;
+  insert into roleta.participants(event_id,full_name,whatsapp,whatsapp_normalized,instagram,email,privacy_accepted_at) values(v_event.id,trim(p_name),trim(p_whatsapp),regexp_replace(trim(p_whatsapp),'\\D','','g'),nullif(trim(p_instagram),''),nullif(trim(p_email),''),now())
+  on conflict(event_id,whatsapp_normalized) do update set full_name=excluded.full_name, whatsapp=excluded.whatsapp, instagram=coalesce(excluded.instagram,roleta.participants.instagram), email=coalesce(excluded.email,roleta.participants.email) returning id into v_participant;
   select coalesce(sum(weight),0) into v_total from roleta.prizes where event_id=v_event.id and active;
   if v_total=0 then raise exception 'NO_PRIZES'; end if;
   v_pick:=random()*v_total;
