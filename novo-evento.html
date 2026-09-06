@@ -1,1 +1,32 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/app.css"><title>Novo evento · Roleta de Prêmios</title></head><body><main class="shell"><header><a class="brand" href="./">RO<span>LETA</span><small>de prêmios</small></a></header><section class="panel create-panel"><p class="eyebrow">NOVO EVENTO</p><h1>Como será sua ação?</h1><form id="eventForm"><label>Nome do evento<input name="title" required placeholder="Ex.: Feira de Primavera"></label><label>Link do evento<input name="slug" required pattern="[a-z0-9-]{3,80}" placeholder="feira-de-primavera"></label><p class="field-label">Tipo de evento</p><div class="choices"><label class="choice"><input type="radio" name="eventType" value="roulette" checked><b>Roleta de Prêmios</b><small>Cliente se cadastra, gira e recebe um prêmio.</small></label><label class="choice"><input type="radio" name="eventType" value="list_draw"><b>Sorteio por Lista</b><small>Importe um Excel e sorteie um registro.</small></label></div><div id="rouletteOptions"><p class="field-label">Modelo da roleta</p><div class="choices"><label class="choice"><input type="radio" name="layout" value="slots" checked><b>Caça-níquel</b><small>Três rolos e alavanca.</small></label><label class="choice"><input type="radio" name="layout" value="wheel"><b>Roleta circular</b><small>Roleta com ponteiro giratório.</small></label></div><p class="field-label">Paleta de cores</p><div class="palettes"><label class="palette-card"><input type="radio" name="palette" value="tomasetto" data-primary="#681D30" data-secondary="#C79339" checked><span class="palette-swatch tomasetto"></span><b>Clássica</b><small>Bordô e dourado</small></label><label class="palette-card"><input type="radio" name="palette" value="oceano" data-primary="#0F3D56" data-secondary="#41B9C5"><span class="palette-swatch oceano"></span><b>Oceano</b><small>Azul e turquesa</small></label><label class="palette-card"><input type="radio" name="palette" value="floresta" data-primary="#174C3C" data-secondary="#D2A74B"><span class="palette-swatch floresta"></span><b>Floresta</b><small>Verde e ouro</small></label><label class="palette-card"><input type="radio" name="palette" value="ameixa" data-primary="#552047" data-secondary="#E37AA2"><span class="palette-swatch ameixa"></span><b>Ameixa</b><small>Roxo e rosa</small></label></div></div><button class="primary">Criar evento</button><p class="message" id="eventMessage"></p></form></section></main><script type="module" src="js/novo-evento.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="css/app.css"><title>Novo evento · Roleta de Prêmios</title>
+</head>
+<body><main class="shell"><header><a class="brand" href="./">RO<span>LETA</span><small>de prêmios</small></a></header>
+  <section class="panel create-panel"><p class="eyebrow">NOVO EVENTO</p><h1>Como será sua ação?</h1>
+    <form id="eventForm">
+      <label>Nome do evento<input name="title" required placeholder="Ex.: Feira de Primavera"></label>
+      <p class="field-label">Tipo de evento</p>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="eventType" value="roulette" checked><b>Roleta de Prêmios</b><small>Cliente se cadastra, gira e recebe um prêmio.</small></label>
+        <label class="choice"><input type="radio" name="eventType" value="list_draw"><b>Sorteio por Lista</b><small>Importe um Excel e sorteie um registro.</small></label>
+      </div>
+      <div id="rouletteOptions"><p class="field-label">Modelo da roleta</p>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="layout" value="slots" checked><b>Caça-níquel</b><small>Três rolos e alavanca.</small></label>
+          <label class="choice"><input type="radio" name="layout" value="wheel"><b>Roleta circular</b><small>Roleta com ponteiro giratório.</small></label>
+        </div>
+        <p class="field-label">Paleta de cores</p>
+        <div class="palettes">
+          <label class="palette-card"><input type="radio" name="palette" data-primary="#681D30" data-secondary="#C79339" checked><span class="palette-swatch tomasetto"></span><b>Clássica</b><small>Bordô e dourado</small></label>
+          <label class="palette-card"><input type="radio" name="palette" data-primary="#0F3D56" data-secondary="#41B9C5"><span class="palette-swatch oceano"></span><b>Oceano</b><small>Azul e turquesa</small></label>
+          <label class="palette-card"><input type="radio" name="palette" data-primary="#174C3C" data-secondary="#D2A74B"><span class="palette-swatch floresta"></span><b>Floresta</b><small>Verde e ouro</small></label>
+          <label class="palette-card"><input type="radio" name="palette" data-primary="#552047" data-secondary="#E37AA2"><span class="palette-swatch ameixa"></span><b>Ameixa</b><small>Roxo e rosa</small></label>
+        </div>
+      </div>
+      <button class="primary">Criar evento</button><p class="message" id="eventMessage"></p>
+    </form>
+  </section>
+</main><script type="module" src="js/novo-evento.js"></script></body></html>
