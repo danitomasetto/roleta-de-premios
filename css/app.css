@@ -25,3 +25,4 @@
 .prize-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-top:28px}.prize-head p{margin:0}.prize-row{display:grid;grid-template-columns:1fr 140px 92px auto;gap:9px;align-items:end}.prize-row button{border:0;font-size:1.2rem;padding:9px;cursor:pointer}
 @media(max-width:760px){.prize-row{grid-template-columns:1fr 1fr}.prize-row label:first-child{grid-column:1/-1}.prize-row button{justify-self:end}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.slot-window.rolling .slot-strip{animation-duration:8.2s}.slot-window.rolling .delay{animation-delay:.22s}.slot-window.rolling .delay2{animation-delay:.44s}.wheel{transition-duration:8.2s}
