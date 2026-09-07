@@ -26,3 +26,9 @@
 @media(max-width:760px){.prize-row{grid-template-columns:1fr 1fr}.prize-row label:first-child{grid-column:1/-1}.prize-row button{justify-self:end}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .slot-window.rolling .slot-strip{animation-duration:8.2s}.slot-window.rolling .delay{animation-delay:.22s}.slot-window.rolling .delay2{animation-delay:.44s}.wheel{transition-duration:8.2s}
+/* Giro contínuo: mantém a energia até o resultado aparecer. */
+@keyframes slot-spin-continuous{to{transform:translateY(-560px)}}
+.slot-window.rolling .slot-strip{animation:slot-spin-continuous .48s linear infinite}
+.slot-window.rolling .delay,.slot-window.rolling .delay2{animation-delay:0s}
+@keyframes wheel-spin-continuous{to{transform:rotate(2880deg)}}
+.wheel.rolling{animation:wheel-spin-continuous 8.5s linear forwards}
